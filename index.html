@@ -2,24 +2,114 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AES Encryption Tool</title>
+    <title>Digital Encryption Tool</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #1a1a1a;
+            color: #f1f1f1;
+            margin: 0;
+            padding: 0;
+        }
+        .header {
+            background-color: #333;
+            padding: 20px;
+            text-align: center;
+            font-size: 24px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #222;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+        }
+        textarea {
+            width: 100%;
+            height: 100px;
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 5px;
+            border: none;
+            resize: none;
+            background-color: #333;
+            color: #f1f1f1;
+            box-sizing: border-box;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            margin-top: 10px;
+            border-radius: 5px;
+            border: none;
+            background-color: #4CAF50;
+            color: #fff;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #333;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+        .footer a {
+            color: #f1f1f1;
+            margin: 0 10px;
+            text-decoration: none;
+        }
+        .footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
-    <h1>AES Encryption Tool</h1>
-    <label for="original-text">Original Text:</label>
-    <input id="original-text" type="text">
-    <button id="encrypt">Encrypt</button>
-    <br><br>
-    <label for="encrypted-text">Encrypted Text:</label>
-    <input id="encrypted-text" type="text" readonly>
-    <br><br>
-    <label for="decrypted-text">Decrypted Text:</label>
-    <input id="decrypted-text" type="text" readonly>
-    <button id="decrypt">Decrypt</button>
 
-    <script src="aes-encryption.js"></script>
-    <script src="main.js"></script>
+<div class="header">I P L TOOLS</div>
+
+<div class="container">
+    <h2>أداة تشفير جافا سكريبت</h2>
+    <textarea id="inputText" placeholder="قم بوضع الكود في المربع لتشفيره"></textarea>
+    <button onclick="encrypt()">تشفير الكود</button>
+    <textarea id="outputText" placeholder="الكود المشفر" readonly></textarea>
+    <button onclick="copyToClipboard()">نسخ الكود</button>
+</div>
+
+<div class="footer">
+    Cradits by IPL | 
+    <a href="#">Facebook</a> | 
+    <a href="#">Twitter</a> | 
+    <a href="#">Instagram</a>
+</div>
+
+<script>
+    function encrypt() {
+        const text = document.getElementById('inputText').value;
+        let result = '';
+
+        for (let i = 0; i < text.length; i++) {
+            const charCode = text.charCodeAt(i);
+            result += charCode + ', ';
+        }
+
+        document.getElementById('outputText').value = result.slice(0, -2);
+    }
+
+    function copyToClipboard() {
+        const outputText = document.getElementById('outputText');
+        outputText.select();
+        document.execCommand('copy');
+        alert('تم نسخ الكود');
+    }
+</script>
+
 </body>
 </html>
