@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Digital Encryption Tool By I P L</title>
+    <title>Encryption Tool by IPL</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -26,17 +26,16 @@
             border-radius: 10px;
             box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
         }
-        textarea {
+        textarea, input {
             width: 100%;
-            height: 100px;
             padding: 10px;
             margin-top: 10px;
             border-radius: 5px;
             border: none;
-            resize: none;
             background-color: #333;
             color: #f1f1f1;
             box-sizing: border-box;
+            resize: none;
         }
         button {
             width: 100%;
@@ -73,25 +72,35 @@
 </head>
 <body>
 
-<div class="header">I P L TOOLS</div>
+<div class="header">IPL TOOLS - Encryption</div>
 
 <div class="container">
-    <h2>أداة تشفير جافا سكريبت</h2>
-    <textarea id="inputText" placeholder="قم بوضع الكود في المربع لتشفيره"></textarea>
-    <button onclick="encrypt()">تشفير الكود</button>
-    <textarea id="outputText" placeholder="الكود المشفر" readonly></textarea>
+    <h2>أداة تشفير النصوص والملفات</h2>
+    
+    <!-- Text Encryption -->
+    <h3>تشفير النصوص</h3>
+    <textarea id="inputText" placeholder="قم بوضع النص هنا لتشفيره"></textarea>
+    <button onclick="encryptText()">تشفير الكود</button>
+    <textarea id="outputText" placeholder="النص المشفر" readonly></textarea>
     <button onclick="copyToClipboard()">نسخ الكود</button>
+
+    <!-- File Encryption -->
+    <h3>تشفير الملفات</h3>
+    <input type="file" id="fileInput" accept=".txt">
+    <button onclick="readFile()">قراءة الملف وتشفيره</button>
+    <textarea id="fileOutputText" placeholder="الكود المشفر" readonly></textarea>
+    <button onclick="downloadEncrypted()">تحميل الكود المشفر</button>
 </div>
 
 <div class="footer">
-    Cradits by IPL | 
+    Credits by IPL | 
     <a href="#">Facebook</a> | 
     <a href="#">Twitter</a> | 
     <a href="#">Instagram</a>
 </div>
 
 <script>
-    function encrypt() {
+    function encryptText() {
         const text = document.getElementById('inputText').value;
         let result = '';
 
@@ -108,6 +117,42 @@
         outputText.select();
         document.execCommand('copy');
         alert('تم نسخ الكود');
+    }
+
+    function readFile() {
+        const fileInput = document.getElementById('fileInput');
+        const file = fileInput.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const text = e.target.result;
+                const encryptedText = encryptTextContent(text);
+                document.getElementById('fileOutputText').value = encryptedText;
+            };
+            reader.readAsText(file);
+        } else {
+            alert('يرجى اختيار ملف');
+        }
+    }
+
+    function encryptTextContent(text) {
+        let result = '';
+        for (let i = 0; i < text.length; i++) {
+            const charCode = text.charCodeAt(i) + 1; // Simple encryption by shifting ASCII
+            result += String.fromCharCode(charCode);
+        }
+        return result;
+    }
+
+    function downloadEncrypted() {
+        const encryptedText = document.getElementById('fileOutputText').value;
+        const blob = new Blob([encryptedText], {type: "text/plain;charset=utf-8"});
+        const link = document.createElement("a");
+        link.href = URL.createObjectURL(blob);
+        link.download = "en.txt";
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
     }
 </script>
 
