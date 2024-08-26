@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Encryption Tool by IPL</title>
+    <title>Double Encryption Tool by IPL</title>
     <style>
         body {
             font-family: 'Courier New', Courier, monospace;
@@ -75,7 +75,7 @@
 </head>
 <body>
 
-<div class="header">IPL TOOLS - Encryption</div>
+<div class="header">IPL TOOLS - Double Encryption</div>
 
 <div class="container">
     <h2>أداة تشفير النصوص والملفات</h2>
@@ -105,14 +105,17 @@
 <script>
     function encryptText() {
         const text = document.getElementById('inputText').value;
-        let result = '';
+        const encrypted = doubleEncrypt(text);
+        document.getElementById('outputText').value = encrypted;
+    }
 
+    function doubleEncrypt(text) {
+        let result = '';
         for (let i = 0; i < text.length; i++) {
             const charCode = text.charCodeAt(i);
-            result += charCode + ', ';
+            result += (charCode * 2) + ', ';
         }
-
-        document.getElementById('outputText').value = result.slice(0, -2);
+        return result.slice(0, -2);
     }
 
     function copyToClipboard() {
@@ -129,22 +132,13 @@
             const reader = new FileReader();
             reader.onload = function(e) {
                 const text = e.target.result;
-                const encryptedText = encryptTextContent(text);
+                const encryptedText = doubleEncrypt(text);
                 document.getElementById('fileOutputText').value = encryptedText;
             };
             reader.readAsText(file);
         } else {
             alert('يرجى اختيار ملف');
         }
-    }
-
-    function encryptTextContent(text) {
-        let result = '';
-        for (let i = 0; i < text.length; i++) {
-            const charCode = text.charCodeAt(i) + 1; // Simple encryption by shifting ASCII
-            result += String.fromCharCode(charCode);
-        }
-        return result;
     }
 
     function downloadEncrypted() {
